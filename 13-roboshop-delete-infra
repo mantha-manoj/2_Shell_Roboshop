@@ -11,7 +11,7 @@ INSTANCES=$( aws ec2 describe-instances \
     --output text
 )
 
-echo $INSTANCES
+echo ${#INSTANCES[@]}
 
 # aws ec2 terminate-instances --instance-ids $INSTANCES
 
