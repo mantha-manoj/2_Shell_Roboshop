@@ -39,3 +39,16 @@ VALIDATE $? "Enabled Nginx"
 
 systemctl start nginx &>>$LOGS_FILE
 VALIDATE $? "Started Nginx"
+
+rm -rf /usr/share/nginx/html/* 
+VALIDATE $? "Removed current HTML code"
+
+curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip &>>$LOGS_FILE
+VALIDATE $? "Download code"
+
+cd /usr/share/nginx/html
+VALIDATE $? "Moved /usr/share/nginx/html directory"
+
+unzip /tmp/frontend.zip &>>$LOGS_FILE
+VALIDATE $? "Unziped the code"
+
