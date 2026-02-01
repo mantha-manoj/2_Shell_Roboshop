@@ -8,6 +8,7 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 SCRIPT_DIR=$PWD
+MYSQL_HOST="mysql.manojmantha.online"
 
 if [ $USERID -ne 0 ]; then
     echo -e "$R Please run this script with root user access $N" | tee -a $LOGS_FILE
@@ -66,4 +67,17 @@ systemctl enable shipping  &>>$LOGS_FILE
 systemctl start shipping
 VALIDATE $? "Enabled and Started shipping"
 
+dnf install mysql -y 
+VALIDATE $? "Installed mysql client"
 
+mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/schema.sql
+VALIDATE $? "Loaded schema into mysql-server"
+
+mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/app-user.sql 
+VALIDATE $? "Loaded user data into mysql-server"
+
+mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/master-data.sql
+VALIDATE $? "Loaded master data into mysql-server"
+
+systemctl restart shipping
+VALIDATE $? "Restarted shipping server"
