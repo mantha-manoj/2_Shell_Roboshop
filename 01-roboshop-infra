@@ -34,7 +34,7 @@ do
         RECORD_NAME="$instance.$DOMAIN_NAME" 
     fi
 
-    echo "IP Address : $IP"
+    echo "Created $instance Instance with IP address $IP"
 
     aws route53 change-resource-record-sets \
     --hosted-zone-id $ZONE_ID \
@@ -59,6 +59,6 @@ do
     }
     '
 
-    echo "record updated for $instace"
+    echo "record updated for $instance"
 
 done
