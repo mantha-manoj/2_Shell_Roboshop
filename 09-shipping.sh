@@ -67,17 +67,17 @@ systemctl enable shipping  &>>$LOGS_FILE
 systemctl start shipping
 VALIDATE $? "Enabled and Started shipping"
 
-dnf install mysql -y 
+dnf install mysql -y &>>$LOGS_FILE
 VALIDATE $? "Installed mysql client"
 
-mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/schema.sql
+mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/schema.sql &>>$LOGS_FILE
 VALIDATE $? "Loaded schema into mysql-server"
 
-mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/app-user.sql 
+mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/app-user.sql &>>$LOGS_FILE
 VALIDATE $? "Loaded user data into mysql-server"
 
-mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/master-data.sql
+mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/master-data.sql &>>$LOGS_FILE
 VALIDATE $? "Loaded master data into mysql-server"
 
-systemctl restart shipping
+systemctl restart shipping &>>$LOGS_FILE
 VALIDATE $? "Restarted shipping server"
