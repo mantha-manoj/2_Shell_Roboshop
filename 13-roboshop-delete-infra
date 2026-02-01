@@ -1,12 +1,13 @@
 #!/bin/bash
 
 INSTANCES=$( aws ec2 describe-instances \
-    --filters 'Name=instance-state-name,Values=running' \
-    --query 'Reservations[].Instances[].{InstanceId:InstanceId,Name:Tags[?Key==`Name`].Value | [0]}' \
-    --output json 
+    --filters "Name=instance-state-name,Values=running" \
+    --query "Reservations[].Instances[?Tags[?Key=='Name' && Value!='linux']].InstanceId" \
+    --output text
 )
+
 
 for i in $INSTANCES
 do
-    echo $i["InstanceId"]
-done 
+    echo $i
+done
