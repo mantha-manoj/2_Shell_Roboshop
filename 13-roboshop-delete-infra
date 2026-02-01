@@ -11,19 +11,17 @@ INSTANCES=$( aws ec2 describe-instances \
     --output text
 )
 
-echo ${#INSTANCES[@]}
+aws ec2 terminate-instances --instance-ids $INSTANCES
 
-# aws ec2 terminate-instances --instance-ids $INSTANCES
+echo "Deleted all running instance other than roboshop"
 
-# echo "Deleted all running instance other than roboshop"
+echo "Deleting all R53 Records other than NS and SOA Types"
 
-# echo "Deleting all R53 Records other than NS and SOA Types"
+aws route53 change-resource-record-sets \
+    --hosted-zone-id $ZONE_ID \
+    --change-batch "$(aws route53 list-resource-record-sets \
+        --hosted-zone-id $ZONE_ID \
+        --query "ResourceRecordSets[?Type!='NS' && Type!='SOA']" \
+        --output json | jq '{Changes: map({Action: "DELETE", ResourceRecordSet: .})}')"
 
-# aws route53 change-resource-record-sets \
-#     --hosted-zone-id $ZONE_ID \
-#     --change-batch "$(aws route53 list-resource-record-sets \
-#         --hosted-zone-id $ZONE_ID \
-#         --query "ResourceRecordSets[?Type!='NS' && Type!='SOA']" \
-#         --output json | jq '{Changes: map({Action: "DELETE", ResourceRecordSet: .})}')"
-
-# echo "Deleted all R53 Records other than NS and SOA Types"
+echo "Deleted all R53 Records other than NS and SOA Types"
