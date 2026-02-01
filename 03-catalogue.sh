@@ -8,7 +8,7 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 SCRIPT_DIR=$PWD
-MONGODB_HOST=mongodb.daws88s.online
+MONGODB_HOST=mongodb.manojmantha.online
 
 if [ $USERID -ne 0 ]; then
     echo -e "$R Please run this script with root user access $N" | tee -a $LOGS_FILE
@@ -56,7 +56,7 @@ rm -rf /app/*
 VALIDATE $? "Removing existing code"
 
 unzip /tmp/catalogue.zip &>>$LOGS_FILE
-VALIDATE $? "Uzip catalogue code"
+VALIDATE $? "Unzip catalogue code"
 
 npm install  &>>$LOGS_FILE
 VALIDATE $? "Installing dependencies"
