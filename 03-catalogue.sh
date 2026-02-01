@@ -70,7 +70,10 @@ systemctl start catalogue
 VALIDATE $? "Started and enabled catalogue"
 
 cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
+VALIDATE $? "Added mongo repo"
+
 dnf install mongodb-mongosh -y &>>$LOGS_FILE
+VALIDATE $? "Installed mongo client"
 
 INDEX=$(mongosh --host $MONGODB_HOST --quiet  --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
 

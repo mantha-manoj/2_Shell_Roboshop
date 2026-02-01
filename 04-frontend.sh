@@ -52,3 +52,8 @@ VALIDATE $? "Moved /usr/share/nginx/html directory"
 unzip /tmp/frontend.zip &>>$LOGS_FILE
 VALIDATE $? "Unziped the code"
 
+cp $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf
+VALIDATE $? "Added Nginx conf file"
+
+systemctl restart nginx 
+VALIDATE $? "Restarted Nginx Server"
