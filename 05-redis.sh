@@ -24,12 +24,12 @@ VALIDATE(){
     fi
 }
 
-dnf module disable redis -y
+dnf module disable redis -y &>>$LOGS_FILE
 VALIDATE $? "Disabled Default Redis Version"
 
-dnf module enable redis:7 -y
+dnf module enable redis:7 -y &>>$LOGS_FILE
 VALIDATE $? "Enabled Redis 7 Version"
 
-dnf install redis -y 
+dnf install redis -y &>>$LOGS_FILE
 VALIDATE $? "Installed Redis"
 
