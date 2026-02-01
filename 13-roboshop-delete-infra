@@ -2,8 +2,6 @@
 
 ZONE_ID="Z00951673I2OYCZYMUOPO"
 
-echo "Deleting all running instance other than roboshop"
-
 
 INSTANCES=$( aws ec2 describe-instances \
     --filters "Name=instance-state-name,Values=running" \
@@ -15,7 +13,6 @@ aws ec2 terminate-instances --instance-ids $INSTANCES
 
 echo "Deleted all running instance other than roboshop"
 
-echo "Deleting all R53 Records other than NS and SOA Types"
 
 aws route53 change-resource-record-sets \
     --hosted-zone-id $ZONE_ID \
