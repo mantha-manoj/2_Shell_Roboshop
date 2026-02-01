@@ -7,7 +7,4 @@ INSTANCES=$( aws ec2 describe-instances \
 )
 
 
-for i in $INSTANCES
-do
-    echo $i
-done
+echo $INSTANCES
