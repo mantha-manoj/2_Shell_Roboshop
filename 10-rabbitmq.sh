@@ -44,5 +44,5 @@ else
     echo -e "Roboshop user already exist ... $Y SKIPPING $N"
 fi
 
-rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
+rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>>$LOGS_FILE
 VALIDATE $? "Set Permissions"
