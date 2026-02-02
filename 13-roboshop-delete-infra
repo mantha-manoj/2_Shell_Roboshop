@@ -7,7 +7,7 @@ for NAME in $@;
 do
   INSTANCE_IDS=$(aws ec2 describe-instances \
     --filters "Name=tag:Name,Values=$NAME" \
-    --query "Reservations[].Instances[].InstanceId" \
+    --query "Reservations[].Instances[0].InstanceId" \
     --output text)
 
   if [ -n "$INSTANCE_IDS" ]; then # Here -n means if Instances empty true otherwise false
