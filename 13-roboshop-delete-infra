@@ -6,7 +6,9 @@ ZONE_ID="Z00951673I2OYCZYMUOPO"
 for NAME in $@; 
 do
   INSTANCE_IDS=$(aws ec2 describe-instances \
-    --filters "Name=tag:Name,Values=$NAME" \
+    --filters \
+      "Name=tag:Name,Values=$NAME" \
+      "Name=instance-state-name,Values=running" \
     --query "Reservations[].Instances[].InstanceId" \
     --output text)
 
