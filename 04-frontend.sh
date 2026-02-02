@@ -52,6 +52,9 @@ VALIDATE $? "Moved /usr/share/nginx/html directory"
 unzip /tmp/frontend.zip &>>$LOGS_FILE
 VALIDATE $? "Unziped the code"
 
+rm -rf /etc/nginx/nginx.conf
+VALIDATE $? "Deleted Previous nginx.conf"
+
 cp $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf
 VALIDATE $? "Added Nginx conf file"
 
