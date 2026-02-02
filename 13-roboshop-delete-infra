@@ -5,7 +5,7 @@ ZONE_ID="Z00951673I2OYCZYMUOPO"
 
 INSTANCES=$( aws ec2 describe-instances \
     --filters "Name=instance-state-name,Values=running" \
-    --query "Reservations[].Instances[?Tags[?Key=='Name' && Value!='linux']].InstanceId" \
+    --query "Reservations[].Instances[?Tags[?Key=='Name' && Value!='roboshop']].InstanceId" \
     --output text
 )
 
