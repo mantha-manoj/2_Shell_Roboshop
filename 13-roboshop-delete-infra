@@ -3,15 +3,21 @@
 ZONE_ID="Z00951673I2OYCZYMUOPO"
 
 
-INSTANCES=$( aws ec2 describe-instances \
-    --filters "Name=instance-state-name,Values=running" \
-    --query "Reservations[].Instances[?Tags[?Key=='Name' && Value!='roboshop']].InstanceId" \
-    --output text
-)
+for NAME in $@; 
+do
+  INSTANCE_IDS=$(aws ec2 describe-instances \
+    --filters "Name=tag:Name,Values=$NAME" \
+    --query "Reservations[].Instances[].InstanceId" \
+    --output text)
 
-aws ec2 terminate-instances --instance-ids $INSTANCES
+  if [ -n "$INSTANCE_IDS" ]; then # Here -n means if Instances empty true otherwise false
+    echo "Terminating instances for $NAME"
+    aws ec2 terminate-instances --instance-ids $INSTANCE_IDS
+  else
+    echo "No instance found for $NAME"
+  fi
+done
 
-echo "Deleted all running instance other than roboshop"
 
 
 aws route53 change-resource-record-sets \
